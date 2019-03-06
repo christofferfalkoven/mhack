@@ -12,7 +12,7 @@
 <body>
   <div id="app">
     <div class="remote-control">
-      <div id="eye1" v-on:click="moveEyes" 
+      <div id="eye1" v-on:click="moveEyes"
                      v-on:mousemove="moveEyes"
                      v-on:mousedown="pressed"
                      v-on:mouseup="released">
@@ -21,18 +21,11 @@
           </div>
       </div>
       <div class="button-container">
-        <button @click="driveForward">FORWARD</button>
+        <button @click="turnLeft">Top Left</button><button @click="turnRight">Top Right</button>
       </div>
       <div class="button-container">
-        <button @click="turnLeft">LEFT</button><button @click="turnRight">RIGHT</button>
+        <button @click="driveForward">Bottom Left</button>  <button @click="driveBackward">Bottom Right</button>
       </div>
-      <div class="button-container">
-        <button @click="driveBackward">BACKWARD</button>
-      </div>
-      <div class="button-container">
-        <button @click="driveServo">SERVO</button>
-      </div>
-      <div class="remote-feedback">
         LAST MOVE: {{turned}}
       </div>
     </div>
