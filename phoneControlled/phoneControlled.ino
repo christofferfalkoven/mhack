@@ -20,6 +20,9 @@
 #define SIG_FORWARD 280
 #define SIG_BACKWARD 370
 #define SIG_SERVO 460
+#define SIG_WHITE_LED 550
+
+#define TURN_SCALE 512
 
 //Servo motor
 #include <Servo.h>
@@ -49,6 +52,7 @@ unsigned long startTime = 0;
 int counter = 0;
 // servo position
 int servoPos = 90;
+int current_light = -1;
 
 void setup() {
   //First motor
@@ -112,32 +116,53 @@ void loop() {
         delay(15);
       }
     }
+    else if (counter < SIG_WHITE_LIGHT){
+        lightup_led(pin_nr);
+    }
   }
 }
 
+void lightup_led(pin_nr){
+  if(pin_nr>=0){
+    digitalWrite(pin_nr,HIGH);
+    digitalWrite(current_nr,LOW);
+  }
+  else {
+    digitalWrite(pin_nr,HIGH);
+  }
+  
+  if (current_nr == pin_nr){
+    current_nr = -1;
+  }
+  else {
+    current_nr = pin_nr;
+  }
+  
+  
+}
 void top_left() {
-  for (int i = 0; i < 1024; i += 1) {
+  for (int i = 0; i < TURN_SCALE; i += 1) {
     stepper(1, 0);
   }
   Serial.println("left");
 }
 
 void top_right() {
-  for (int i = 0; i < 1024; i += 1) {
+  for (int i = 0; i < TURN_SCALE; i += 1) {
     stepper(-1, 0);
   }
   Serial.println("right");
 }
 
 void bottom_left() {
-  for (int i = 0; i < 1024; i += 1) {
+  for (int i = 0; i < TURN_SCALE; i += 1) {
     stepper(1, 1);
   }
   Serial.println("forward");
 }
 
 void bottom_right() {
-  for (int i = 0; i < 1024; i += 1) {
+  for (int i = 0; i < TURN_SCALE; i += 1) {
     stepper(-1, 1);
   }
   Serial.println("backward");
