@@ -37,8 +37,12 @@ var beep = (function () {
         /************
         HERE YOU CAN WRITE NEW LISTENERS IF YOU NEED
         ************/
-        socket.on('turnOnWhite', function () {
-            beep(6);
+        socket.on('move:turnOnWhite', function () {
+           const letTheMoverKnowItHasBeenDone = function() {
+             socket.emit('moved:turnOnWhite');
+           }
+            beep(5,letTheMoverKnowItHasBeenDone);
+            console.log("in turnonwhite");
         });
         socket.on('move:eyes', function (data) {
           this.eyePos = data;
@@ -50,9 +54,10 @@ var beep = (function () {
           const letTheMoverKnowItHasBeenDone = function() {
             socket.emit('moved:motors', motors);
           }
-
+          
           if (left && !right) {
             beep(1, letTheMoverKnowItHasBeenDone);
+            console.log("in leftright");
           }
           if (left && right) {
             beep(3, letTheMoverKnowItHasBeenDone);
