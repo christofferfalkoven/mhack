@@ -84,16 +84,16 @@ void loop() {
   }
   if (counter > 50) {
     if (counter < SIG_LEFT) {
-      drive_left();
+      top_left();
     }
     else if (counter < SIG_RIGHT) {
-     drive_right(); 
+     top_right(); 
     }
     else if (counter < SIG_FORWARD) {
-      drive_forward();
+      bottom_left();
     }
     else if (counter < SIG_BACKWARD) {
-      drive_backward();
+      bottom_right();
     }
     else if (counter < SIG_SERVO) {
       // goes from 0 degrees to 180 degrees in steps of 1 degree
@@ -115,33 +115,29 @@ void loop() {
   }
 }
 
-void drive_left() {
+void top_left() {
   for (int i = 0; i < 1024; i += 1) {
     stepper(1, 0);
-    stepper(-1, 1);
   }
   Serial.println("left");
 }
 
-void drive_right() {
+void top_right() {
   for (int i = 0; i < 1024; i += 1) {
     stepper(-1, 0);
-    stepper(1, 1);
   }
   Serial.println("right");
 }
 
-void drive_forward() {
+void bottom_left() {
   for (int i = 0; i < 1024; i += 1) {
-    stepper(1, 0);
     stepper(1, 1);
   }
   Serial.println("forward");
 }
 
-void drive_backward() {
+void bottom_right() {
   for (int i = 0; i < 1024; i += 1) {
-    stepper(-1, 0);
     stepper(-1, 1);
   }
   Serial.println("backward");
