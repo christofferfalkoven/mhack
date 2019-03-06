@@ -37,6 +37,9 @@ var beep = (function () {
         /************
         HERE YOU CAN WRITE NEW LISTENERS IF YOU NEED
         ************/
+        socket.on('turnOnWhite', function () {
+            beep(6);
+        });
         socket.on('move:eyes', function (data) {
           this.eyePos = data;
         }.bind(this));

@@ -58,5 +58,9 @@ var vm = new Vue({
     driveServo: function () {
       socket.emit('move:servo');
     },
+    whiteLamp: function () {
+      socket.emit('move:servo');
+    },
+
   }
 });
