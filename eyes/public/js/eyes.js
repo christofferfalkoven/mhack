@@ -37,13 +37,7 @@ var beep = (function () {
         /************
         HERE YOU CAN WRITE NEW LISTENERS IF YOU NEED
         ************/
-        socket.on('move:turnOnWhite', function () {
-           const letTheMoverKnowItHasBeenDone = function() {
-             socket.emit('moved:turnOnWhite');
-           }
-            beep(5,letTheMoverKnowItHasBeenDone);
-            console.log("in turnonwhite");
-        });
+
         socket.on('move:eyes', function (data) {
           this.eyePos = data;
         }.bind(this));
@@ -54,10 +48,9 @@ var beep = (function () {
           const letTheMoverKnowItHasBeenDone = function() {
             socket.emit('moved:motors', motors);
           }
-          
+
           if (left && !right) {
             beep(1, letTheMoverKnowItHasBeenDone);
-            console.log("in leftright");
           }
           if (left && right) {
             beep(3, letTheMoverKnowItHasBeenDone);
@@ -69,11 +62,11 @@ var beep = (function () {
             beep(4, letTheMoverKnowItHasBeenDone);
           }
         });
-        socket.on('move:servo', function () {
-          const letTheMoverKnowItHasBeenDone = function() {
-            socket.emit('moved:servo');
-          }
-            beep(5, letTheMoverKnowItHasBeenDone);
+        socket.on('move:white', function () {
+           const letTheMoverKnowItHasBeenDone = function() {
+             socket.emit('moved:white');
+           }
+           beep(6, letTheMoverKnowItHasBeenDone);
         });
       }
     });
