@@ -13,7 +13,6 @@
 #define IN24 12
 //input from phone
 #define P_SIG 0
-#define W_LED 3
 
 //Signal length definitions, from phone (should ideally be 90, 180, 270, 360, 450 but, you know..., noise)
 #define SIG_LEFT 100
@@ -22,6 +21,11 @@
 #define SIG_BACKWARD 370
 #define SIG_SERVO 460
 #define SIG_WHITE_LED 550
+#define SIG_RED_LED 640
+#define SIG_GREEN_LED 730
+#define SIG_BLUE_LED 820
+#define SIG_LOWER_BR 910
+#define SIG_INCR_BR 1000
 
 #define TURN_SCALE 512
 
@@ -53,8 +57,13 @@ unsigned long startTime = 0;
 int counter = 0;
 // servo position
 int servoPos = 90;
-int current_light = -1;
-int turn = 0;
+int current_red = 0;
+int current_blue = 0;
+int current_green = 0;
+
+int redPin= 2;
+int greenPin = 3;
+int bluePin = 4;
 
 void setup() {
   //First motor
@@ -70,8 +79,9 @@ void setup() {
   pinMode(P_SIG, INPUT);
   pinMode(LED_BUILTIN, OUTPUT);
 
-  pinMode(W_LED, OUTPUT);
-  pinMode(13, OUTPUT);
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin,OUTPUT);
 
   servo1.attach(2);  // attaches the servo on pin 2 to the servo object
   
@@ -122,28 +132,84 @@ void loop() {
       }
     }
     else if (counter < SIG_WHITE_LED){
-        lightup_led(W_LED);
-        //digitalWrite(13,HIGH);
+        if (current_red>=155 && current_green >=155 && current_blue>=155){
+          current_red = 0;
+          current_green = 0;
+          current_blue = 0;
+        }
+        else {
+          current_red = 255;
+          current_green = 255;
+          current_blue = 255;
+        }
+        setColor(current_red,current_green,current_blue);
+    }
+    else if (counter < SIG_RED_LED){
+        if (current_red>=155 && current_green <155 && current_blue<155){
+          current_red = 0;
+          current_green = 0;
+          current_blue = 0;
+        }
+        else {
+          current_red = 255;
+          current_green = 0;
+          current_blue = 0;
+        }
+        setColor(current_red,current_green,current_blue);
+    }
+    else if (counter < SIG_GREEN_LED){
+        if (current_red<155 && current_green>=155 && current_blue<155){
+          current_red = 0;
+          current_green = 0;
+          current_blue = 0;
+        }
+        else {
+          current_red = 0;
+          current_green = 255;
+          current_blue = 0;
+        }
+        setColor(current_red,current_green,current_blue);
+    }
+    else if (counter < SIG_BLUE_LED){
+        if (current_red<155 && current_green<155 && current_blue>=155){
+          current_red = 0;
+          current_green = 0;
+          current_blue = 0;
+        }
+        else {
+          current_red = 0;
+          current_green = 0;
+          current_blue = 255;
+        }
+        setColor(current_red,current_green,current_blue);
+    }
+    else if (counter < SIG_LOWER_BR){
+        if (current_red<=255 && current_red >=180){
+          current_red -= 25; 
+        }
+        if (current_green<=255 && current_green >=180){
+          current_green -= 25; 
+        }
+        if (current_blue<=255 && current_blue >=180){
+          current_blue -= 25;
+        }
+        setColor(current_red,current_green,current_blue);
+    }
+    else if (counter < SIG_INCR_BR){
+        if (current_red<=230 && current_red >=155){
+          current_red += 25; 
+        }
+        if (current_green<=230 && current_green >=155){
+          current_green += 25; 
+        }
+        if (current_blue<=230 && current_blue >=155){
+          current_blue += 25; 
+        }
+        setColor(current_red,current_green,current_blue);
     }
   }
 }
 
-void lightup_led(int pin_nr){
-  if(pin_nr>=0){
-    digitalWrite(pin_nr,HIGH);
-    digitalWrite(current_light,LOW);
-  }
-  else {
-    digitalWrite(pin_nr,HIGH);
-  }
-  
-  if (current_light == pin_nr){
-    current_light = -1;
-  }
-  else {
-    current_light = pin_nr;
-  }
-}
 
 void top_left() {
   for (int i = 0; i < TURN_SCALE; i += 1) {
@@ -190,4 +256,10 @@ void IncrementPhase(int rotationDirection, int motor) {
   Phase[motor] += 8;
   Phase[motor] += rotationDirection;
   Phase[motor] %= 8;
+}
+
+void setColor(int redValue, int greenValue, int blueValue) {
+  analogWrite(redPin, 255-redValue);
+  analogWrite(greenPin, 255-greenValue);
+  analogWrite(bluePin, 255-blueValue);
 }
