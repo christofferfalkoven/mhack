@@ -26,7 +26,7 @@ var vm = new Vue({
     socket.on('moved:servo', function () {
       this.turned = "SERVO";
     }.bind(this));
-    socket.on('moved:turnOnWhite', function () {
+    socket.on('moved:white', function () {
       this.turned = "WHITE";
     }.bind(this));
   },
@@ -62,7 +62,7 @@ var vm = new Vue({
       socket.emit('move:servo');
     },
     whiteLamp: function () {
-      socket.emit('move:turnOnWhite');
+      socket.emit('move:white');
     },
 
   }

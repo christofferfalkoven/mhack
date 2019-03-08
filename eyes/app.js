@@ -50,6 +50,13 @@ These are not associated with any logical operations
   socket.on('moved:servo', function () {
     io.emit('moved:servo');
   });
+  socket.on('move:white', function () {
+    io.emit('move:white');
+  });
+  socket.on('moved:white', function () {
+    io.emit('moved:white');
+  });
+
 });
 
 var server = http.listen(app.get('port'), function () {
