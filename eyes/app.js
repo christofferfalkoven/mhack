@@ -56,6 +56,36 @@ These are not associated with any logical operations
   socket.on('moved:white', function () {
     io.emit('moved:white');
   });
+  socket.on('move:red', function () {
+    io.emit('move:red');
+  });
+  socket.on('moved:red', function () {
+    io.emit('moved:red');
+  });
+  socket.on('move:green', function () {
+    io.emit('move:green');
+  });
+  socket.on('moved:green', function () {
+    io.emit('moved:green');
+  });
+  socket.on('move:blue', function () {
+    io.emit('move:blue');
+  });
+  socket.on('moved:blue', function () {
+    io.emit('moved:blue');
+  });
+  socket.on('move:incrBr', function () {
+    io.emit('move:incrBr');
+  });
+  socket.on('moved:incrBr', function () {
+    io.emit('moved:incrBr');
+  });
+  socket.on('move:decrBr', function () {
+    io.emit('move:decrBr');
+  });
+  socket.on('moved:decrBr', function () {
+    io.emit('moved:decrBr');
+  });
 
 });
 

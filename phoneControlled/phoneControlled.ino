@@ -7,9 +7,9 @@
 #define IN13 7
 #define IN14 8
 //Second motor
-#define IN21 9
-#define IN22 10
-#define IN23 11
+#define IN21 2
+#define IN22 3
+#define IN23 4
 #define IN24 12
 //input from phone
 #define P_SIG 0
@@ -32,7 +32,7 @@
 //Servo motor
 #include <Servo.h>
  
-Servo servo1;  // create servo object to control a servo
+//Servo servo1;  // create servo object to control a servo
 
 //Stepper motor phases, table magic
 const int phases1[] = {0, 0, 0, 0, 0, 1, 1, 1};
@@ -56,14 +56,14 @@ int Speed = 100; //MUST BE 1 - 100
 unsigned long startTime = 0;
 int counter = 0;
 // servo position
-int servoPos = 90;
+//int servoPos = 90;
 int current_red = 0;
 int current_blue = 0;
 int current_green = 0;
 
-int redPin= 2;
-int greenPin = 3;
-int bluePin = 4;
+int redPin= 9;
+int greenPin = 10;
+int bluePin = 11;
 
 void setup() {
   //First motor
@@ -83,10 +83,11 @@ void setup() {
   pinMode(greenPin, OUTPUT);
   pinMode(bluePin,OUTPUT);
 
-  servo1.attach(2);  // attaches the servo on pin 2 to the servo object
+  //servo1.attach(2);  // attaches the servo on pin 2 to the servo object
   
   Serial.begin(57600);
   Serial.println("intitalized");
+  setColor(0, 0,0);
 }
 
 void loop() {
@@ -115,24 +116,19 @@ void loop() {
       bottom_right();
     }
     else if (counter < SIG_SERVO) {
-      // goes from 0 degrees to 180 degrees in steps of 1 degree
-      for(servoPos = 90; servoPos < 180; servoPos += 1) {
-        servo1.write(servoPos + sketchyServoOffset);  // tell servo to go to position in variable 'pos'
-        delay(15);               // waits 15ms for the servo to reach the position
-      }
-      // goes back, from 180 degrees to 0
-      for(servoPos = 180; servoPos > 0; servoPos -= 1) {
-        servo1.write(servoPos + sketchyServoOffset);  // tell servo to go to position in variable 'pos'
-        delay(15);
-      }
-      // then back to starting position
-      for(servoPos = 0; servoPos < 90; servoPos += 1) {
-        servo1.write(servoPos + sketchyServoOffset);  // tell servo to go to position in variable 'pos'
-        delay(15);
-      }
+        if (current_red<=205 && current_red >=5){
+          current_red += 50; 
+        }
+        if (current_green<=205 && current_green >=5){
+          current_green += 50; 
+        }
+        if (current_blue<=205 && current_blue >=5){
+          current_blue += 50; 
+        }
+        setColor(current_red,current_green,current_blue);
     }
     else if (counter < SIG_WHITE_LED){
-        if (current_red>=155 && current_green >=155 && current_blue>=155){
+        if (current_red>=5 && current_green >=5 && current_blue>=5){
           current_red = 0;
           current_green = 0;
           current_blue = 0;
@@ -145,7 +141,7 @@ void loop() {
         setColor(current_red,current_green,current_blue);
     }
     else if (counter < SIG_RED_LED){
-        if (current_red>=155 && current_green <155 && current_blue<155){
+        if (current_red>=5 && current_green <5 && current_blue<5){
           current_red = 0;
           current_green = 0;
           current_blue = 0;
@@ -158,7 +154,7 @@ void loop() {
         setColor(current_red,current_green,current_blue);
     }
     else if (counter < SIG_GREEN_LED){
-        if (current_red<155 && current_green>=155 && current_blue<155){
+        if (current_red<5 && current_green>=5 && current_blue<5){
           current_red = 0;
           current_green = 0;
           current_blue = 0;
@@ -171,7 +167,7 @@ void loop() {
         setColor(current_red,current_green,current_blue);
     }
     else if (counter < SIG_BLUE_LED){
-        if (current_red<155 && current_green<155 && current_blue>=155){
+        if (current_red<5 && current_green<5 && current_blue>=5){
           current_red = 0;
           current_green = 0;
           current_blue = 0;
@@ -184,26 +180,26 @@ void loop() {
         setColor(current_red,current_green,current_blue);
     }
     else if (counter < SIG_LOWER_BR){
-        if (current_red<=255 && current_red >=180){
-          current_red -= 25; 
+        if (current_red<=255 && current_red >=55){
+          current_red -= 50; 
         }
-        if (current_green<=255 && current_green >=180){
-          current_green -= 25; 
+        if (current_green<=255 && current_green >=55){
+          current_green -= 50; 
         }
-        if (current_blue<=255 && current_blue >=180){
-          current_blue -= 25;
+        if (current_blue<=255 && current_blue >=55){
+          current_blue -= 50;
         }
         setColor(current_red,current_green,current_blue);
     }
     else if (counter < SIG_INCR_BR){
-        if (current_red<=230 && current_red >=155){
-          current_red += 25; 
+        if (current_red<=205 && current_red >=5){
+          current_red += 50; 
         }
-        if (current_green<=230 && current_green >=155){
-          current_green += 25; 
+        if (current_green<=205 && current_green >=5){
+          current_green += 50; 
         }
-        if (current_blue<=230 && current_blue >=155){
-          current_blue += 25; 
+        if (current_blue<=205 && current_blue >=5){
+          current_blue += 50; 
         }
         setColor(current_red,current_green,current_blue);
     }

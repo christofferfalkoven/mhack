@@ -27,7 +27,13 @@
         <button @click="driveForward">Bottom Left</button>  <button @click="driveBackward">Bottom Right</button>
       </div>
       <div class="button-container">
-        <button @click="whiteLamp">White Light</button>
+        <button @click="whiteLamp">White Light</button>  <button @click="redLamp">Red Light</button>
+      </div>
+      <div class="button-container">
+        <button @click="greenLamp">Green Light</button>  <button @click="blueLamp">Blue Light</button>
+      </div>
+      <div class="button-container">
+        <button @click="decrBrightness">-- Brightness</button>  <button @click="incrBrightness">++ Brightness</button>
       </div>
         LAST MOVE: {{turned}}
       </div>

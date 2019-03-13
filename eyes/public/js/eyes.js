@@ -68,5 +68,35 @@ var beep = (function () {
            }
            beep(6, letTheMoverKnowItHasBeenDone);
         });
+        socket.on('move:red', function () {
+          const letTheMoverKnowItHasBeenDone = function() {
+            socket.emit('moved:red');
+          }
+          beep(7, letTheMoverKnowItHasBeenDone);
+        });
+        socket.on('move:green', function () {
+          const letTheMoverKnowItHasBeenDone = function() {
+            socket.emit('moved:green');
+          }
+          beep(8, letTheMoverKnowItHasBeenDone);
+        });
+        socket.on('move:blue', function () {
+          const letTheMoverKnowItHasBeenDone = function() {
+            socket.emit('moved:blue');
+          }
+          beep(9, letTheMoverKnowItHasBeenDone);
+        });
+        socket.on('move:incrBr', function () {
+          const letTheMoverKnowItHasBeenDone = function() {
+            socket.emit('moved:incrBr');
+          }
+          beep(5, letTheMoverKnowItHasBeenDone);
+        });
+        socket.on('move:decrBr', function () {
+          const letTheMoverKnowItHasBeenDone = function() {
+            socket.emit('moved:decrBr');
+          }
+          beep(10, letTheMoverKnowItHasBeenDone);
+        });  
       }
     });

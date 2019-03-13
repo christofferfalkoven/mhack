@@ -29,6 +29,21 @@ var vm = new Vue({
     socket.on('moved:white', function () {
       this.turned = "WHITE";
     }.bind(this));
+    socket.on('moved:red', function () {
+      this.turned = "RED";
+    }.bind(this));
+    socket.on('moved:green', function () {
+      this.turned = "GREEN";
+    }.bind(this));
+    socket.on('moved:blue', function () {
+      this.turned = "BLUE";
+    }.bind(this));
+    socket.on('moved:incrBr', function () {
+      this.turned = "INCREASED BRIGHTNESS";
+    }.bind(this));
+    socket.on('moved:decrBr', function () {
+      this.turned = "DECREASED BRIGHTNESS";
+    }.bind(this));
   },
   methods: {
     pressed: function () {
@@ -63,6 +78,21 @@ var vm = new Vue({
     },
     whiteLamp: function () {
       socket.emit('move:white');
+    },
+    redLamp: function () {
+      socket.emit('move:red');
+    },
+    greenLamp: function () {
+      socket.emit('move:green');
+    },
+    blueLamp: function () {
+      socket.emit('move:blue');
+    },
+    incrBrightness: function () {
+      socket.emit('move:incrBr');
+    },
+    decrBrightness: function () {
+      socket.emit('move:decrBr');
     },
 
   }
